@@ -1,6 +1,12 @@
+/* @font-face {
+  font-family: 'Glinte';
+  src: url('http://fictional-university.local/wp-content/themes/fictional-university-theme/webfonts/Glinte.ttf');
+  font-weight: bold;
+} */
 body {
   color: #333;
   font-family: "Roboto", sans-serif;
+  font-family: 'Glinte';
   overflow-x: hidden;
   position: relative;
 }
@@ -1180,7 +1186,8 @@ body.admin-bar .search-overlay {
 }
 .headline {
   margin: 0;
-  font-family: "Roboto Condensed", sans-serif;
+  /* font-family: '"Roboto Condensed", sans-serif'; */
+  font-family: 'Glinte';
   font-weight: 300;
 }
 .headline--large {

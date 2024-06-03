@@ -1,11 +1,67 @@
 <?php  
 
+function pageBanner($args = NULL) {
+
+
+    if(!$args['title']){
+        $args['title'] = get_the_title();
+    }
+
+    if(!$args['subtitle']){
+        $args['subtitle'] = get_field('page_banner_subtitle');
+    }
+
+        if(!$args['photo']){
+            if(get_field('page_banner_background_image')){
+                $args['photo'] = get_field('page_banner_background_image') ['sizes'] ['pageBanner'];
+            }        
+            else{
+                $args['photo'] = get_theme_file_uri('/images/ocean.jpg');
+            }
+        }
+
+    // Set default values
+    $defaults = array(
+        'title' => get_the_title(),
+        'subtitle' => get_field('page_banner_subtitle'),
+        'photo' => get_field('page_banner_background_image')
+    );
+
+    // Merge default values with provided arguments
+    $args = wp_parse_args($args, $defaults);
+
+    // Ensure 'photo' is always an array with the 'sizes' key
+    if (!$args['photo']) {
+        $args['photo'] = array(
+            'sizes' => array(
+                'pageBanner' => get_template_directory_uri() . '/path/to/default-image.jpg' // Replace with the path to your default image
+            )
+        );
+    }
+
+    // Output the banner HTML
+    ?>
+<div class="page-banner">
+      <div class="page-banner__bg-image" style="background-image: url(<?php echo $args['photo']; ?> )"></div>
+      <div class="page-banner__content container container--narrow">
+        <h1 class="page-banner__title"><?php echo $args['title']; ?></h1>
+        <div class="page-banner__intro">
+          <p><?php echo $args['subtitle']; ?></p>
+        </div>
+      </div>
+    </div>
+<?php }
+
+
+
 function  university_files(){
     wp_enqueue_script('main-univerdity-js', get_theme_file_uri('build/index.js'), array('jquery'), '1.0', true);
     wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
     wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     wp_enqueue_style('university_main_styles', get_theme_file_uri('/build/style-index.css'));
     wp_enqueue_style('university_extra_styles', get_theme_file_uri('/build/index.css'));
+    // wp_enqueue_style('custom-font-glinte', get_theme_file_uri('/webfonts/Glinte.ttf'), array(), '1.0');
+    // wp_enqueue_style('university_extra_font', get_theme_file_uri('/build/fonts.css'));
 
 }
 
